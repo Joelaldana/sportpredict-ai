@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: sportpredict-ai
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FOOTBALL_DATA_API_KEY
+        sync: false
+      - key: VITE_ADSENSE_CLIENT_ID
+        sync: false

@@ -1,0 +1,6 @@
+{
+  "name": "SportPredict AI - Pronósticos y Estadísticas Deportivas",
+  "description": "Plataforma stateless de estadísticas, análisis H2H y pronósticos deportivos asistidos por Inteligencia Artificial y monetizada con AdSense.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
