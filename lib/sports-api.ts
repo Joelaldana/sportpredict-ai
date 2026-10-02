@@ -903,8 +903,7 @@ async function fetchESPNMatchSummary(
   }
 }
 
-export const getDailyMatches = cache(async (leagueId?: string, forceFresh = false): Promise<Match[]> => {
-  const cacheKey = `daily_matches_${leagueId || 'all'}`;
+export const getDailyMatches = async (leagueId?: string, forceFresh = false): Promise<Match[]> => {  const cacheKey = `daily_matches_${leagueId || 'all'}`;
   if (!forceFresh) {
     const cached = getCached<Match[]>(cacheKey);
     if (cached && cached.length > 0) return cached;
@@ -942,9 +941,9 @@ export const getDailyMatches = cache(async (leagueId?: string, forceFresh = fals
 
   setCached(cacheKey, finalMatches);
   return finalMatches;
-});
+};
 
-export const getMatchById = cache(async (id: string): Promise<Match | null> => {
+export const getMatchById = async (id: string): Promise<Match | null> => {
   const cacheKey = `match_${id}`;
   const cached = getCached<Match>(cacheKey);
   if (cached) return cached;
@@ -1001,10 +1000,12 @@ export const getMatchById = cache(async (id: string): Promise<Match | null> => {
   }
 
   return null;
-});
+};
 
-export const getHeadToHead = cache(
-  async (team1Id: string, team2Id: string): Promise<HeadToHeadData> => {
+export const getHeadToHead = async (
+  team1Id: string,
+  team2Id: string
+): Promise<HeadToHeadData> => {
     const cacheKey = `h2h_${team1Id}_${team2Id}`;
     const cached = getCached<HeadToHeadData>(cacheKey);
     if (cached) return cached;
@@ -1080,11 +1081,11 @@ export const getHeadToHead = cache(
 
     setCached(cacheKey, data);
     return data;
-  }
-);
+  };
 
-export const getLineups = cache(
-  async (matchId: string): Promise<{ home: Lineup; away: Lineup }> => {
+export const getLineups = async (
+  matchId: string
+): Promise<{ home: Lineup; away: Lineup }> => {
     const cacheKey = `lineups_${matchId}`;
     const cached = getCached<{ home: Lineup; away: Lineup }>(cacheKey);
     if (cached) return cached;
@@ -1204,8 +1205,7 @@ export const getLineups = cache(
 
     setCached(cacheKey, data);
     return data;
-  }
-);
+  };
 
 const FALLBACK_STANDINGS_BY_LEAGUE: Record<string, StandingTeam[]> = {
   laliga: [
@@ -1290,8 +1290,9 @@ const FALLBACK_STANDINGS_BY_LEAGUE: Record<string, StandingTeam[]> = {
   ],
 };
 
-export const getLeagueStandings = cache(
-  async (leagueId: string): Promise<StandingTeam[]> => {
+export const getLeagueStandings = async (
+  leagueId: string
+): Promise<StandingTeam[]> => {
     const validLeague = leagueId && FALLBACK_STANDINGS_BY_LEAGUE[leagueId] ? leagueId : 'laliga';
     const cacheKey = `standings_${validLeague}`;
     const cached = getCached<StandingTeam[]>(cacheKey);
@@ -1355,5 +1356,4 @@ export const getLeagueStandings = cache(
     const fallbackData = FALLBACK_STANDINGS_BY_LEAGUE[validLeague] || FALLBACK_STANDINGS_BY_LEAGUE.laliga;
     setCached(cacheKey, fallbackData);
     return fallbackData;
-  }
-);
+  };
